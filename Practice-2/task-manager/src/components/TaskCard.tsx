@@ -17,11 +17,11 @@ export default function TaskCard({ task }: TaskCardProps) {
   const getPriorityColor = (priority: string) => {
     switch (priority) {
       case 'low':
-        return 'bg-green-100 text-green-700';
+        return 'bg-chart-2/10 text-chart-2 border-2 border-chart-2';
       case 'medium':
-        return 'bg-yellow-100 text-yellow-800';
+        return 'bg-chart-3/10 text-chart-3 border-2 border-chart-3';
       case 'high':
-        return 'bg-red-100 text-red-700';
+        return 'bg-destructive/10 text-destructive border-2 border-destructive';
       default:
         return '';
     }
@@ -40,7 +40,7 @@ export default function TaskCard({ task }: TaskCardProps) {
         </Badge>
       </CardHeader>
       <CardContent>
-        <p className="text-sm text-gray-600 mb-2">{task.description}</p>
+        <p className="text-sm text-muted-foreground mb-2">{task.description}</p>
         <div className="flex justify-between text-xs text-gray-500">
           <div className="flex items-center gap-1">
             <Clock className="w-4 h-4" />

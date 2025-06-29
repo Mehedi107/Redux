@@ -29,7 +29,15 @@ const initialState: IInitialState = {
       description: 'gioehgiej',
       dueDate: '25-01-2026',
       isComplete: false,
-      priority: 'medium',
+      priority: 'high',
+    },
+    {
+      id: 'sdfsdgg',
+      title: 'sgagf',
+      description: 'gioehgiej',
+      dueDate: '25-01-2026',
+      isComplete: false,
+      priority: 'low',
     },
   ],
 };
