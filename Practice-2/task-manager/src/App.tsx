@@ -1,11 +1,11 @@
 import { Outlet } from 'react-router';
 import './App.css';
-import { Button } from './components/ui/button';
+import Navbar from './components/Navbar';
 
 function App() {
   return (
     <>
-      <div>Navbar</div>
+      <Navbar />
       <Outlet />
       <div>Footer</div>
     </>
