@@ -10,11 +10,11 @@ interface ITask {
 }
 
 interface IInitialState {
-  task: ITask[];
+  tasks: ITask[];
 }
 
 const initialState: IInitialState = {
-  task: [
+  tasks: [
     {
       id: 'sdfsdgg',
       title: 'sgagf',
