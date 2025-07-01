@@ -33,6 +33,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from './ui/select';
+import { useCreateTaskMutation } from '@/store/api/baseApi';
 
 // 1. Define Zod schema
 const taskSchema = z.object({
@@ -42,13 +43,14 @@ const taskSchema = z.object({
     .min(5, { message: 'Description must be at least 5 characters.' }),
   dueDate: z.string().min(1, { message: 'Due date is required.' }),
   priority: z.enum(['low', 'medium', 'high']),
+  isComplete: z.boolean(),
+  member: z.string().optional(),
 });
 
 // 2. Modal Form Component
 export function AddNewTask() {
   const [open, setOpen] = useState(false);
-
-  const dispatch = useAppDispatch();
+  const [createTask, { data, isLoading, isError }] = useCreateTaskMutation();
 
   const form = useForm<z.infer<typeof taskSchema>>({
     resolver: zodResolver(taskSchema),
@@ -57,14 +59,19 @@ export function AddNewTask() {
       description: '',
       dueDate: '',
       priority: 'medium',
+      isComplete: false,
     },
   });
 
-  function onSubmit(values: z.infer<typeof taskSchema>) {
-    console.log(values);
-    // dispatch(addTask(values));
-    // Add task to state or dispatch to context here
-    setOpen(false); // Close modal on submit
+  async function onSubmit(values: z.infer<typeof taskSchema>) {
+    try {
+      await createTask(values).unwrap();
+      alert('Task created successfully');
+    } catch (error) {
+      console.log('failed to create task', error);
+    }
+
+    setOpen(false);
     form.reset();
   }
 

@@ -6,8 +6,6 @@ import { useGetTaskAllQuery } from '@/store/api/baseApi';
 export default function Home() {
   const { data, isError, isLoading } = useGetTaskAllQuery(undefined);
 
-  console.log({ data, isError, isLoading });
-
   if (isLoading) return <p>Loading...</p>;
 
   return (
@@ -17,7 +15,7 @@ export default function Home() {
         <FilterTab />
       </div>
       {data.tasks.map((task: any) => (
-        <TaskCard task={task} key={task.id} />
+        <TaskCard task={task} key={task._id} />
       ))}
     </div>
   );
