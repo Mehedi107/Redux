@@ -23,6 +23,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 
+import { useAppDispatch } from './../store/hooks';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import {
@@ -32,6 +33,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from './ui/select';
+import { addTask } from '@/store/features/taskSlice';
 
 // 1. Define Zod schema
 const taskSchema = z.object({
@@ -47,6 +49,8 @@ const taskSchema = z.object({
 export function AddNewTask() {
   const [open, setOpen] = useState(false);
 
+  const dispatch = useAppDispatch();
+
   const form = useForm<z.infer<typeof taskSchema>>({
     resolver: zodResolver(taskSchema),
     defaultValues: {
@@ -58,7 +62,7 @@ export function AddNewTask() {
   });
 
   function onSubmit(values: z.infer<typeof taskSchema>) {
-    console.log('New Task:', values);
+    dispatch(addTask(values));
     // Add task to state or dispatch to context here
     setOpen(false); // Close modal on submit
     form.reset();
@@ -70,7 +74,7 @@ export function AddNewTask() {
         <Button>Add Task</Button>
       </DialogTrigger>
 
-      <DialogContent>
+      <DialogContent aria-describedby={undefined}>
         <DialogHeader>
           <DialogTitle>Add New Task</DialogTitle>
         </DialogHeader>
@@ -126,17 +130,8 @@ export function AddNewTask() {
                 <FormItem>
                   <FormLabel>Priority</FormLabel>
                   <FormControl>
-                    {/* <select
-                      {...field}
-                      className="w-full border rounded px-3 py-2 text-sm"
-                    >
-                      <option value="low">Low</option>
-                      <option value="medium">Medium</option>
-                      <option value="high">High</option>
-                    </select> */}
-
-                    <Select>
-                      <SelectTrigger className="w-[180px]">
+                    <Select onValueChange={field.onChange}>
+                      <SelectTrigger className="w-full">
                         <SelectValue placeholder="Set Priority" />
                       </SelectTrigger>
                       <SelectContent>

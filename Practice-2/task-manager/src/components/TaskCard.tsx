@@ -1,6 +1,9 @@
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle2, Clock, Flag } from 'lucide-react';
+import { Checkbox } from './ui/checkbox';
+import { useAppDispatch } from '@/store/hooks';
+import { toggleTaskCompletion } from '@/store/features/taskSlice';
 
 interface TaskCardProps {
   task: {
@@ -27,9 +30,15 @@ export default function TaskCard({ task }: TaskCardProps) {
     }
   };
 
+  const dispatch = useAppDispatch();
+
   return (
     <Card className="w-full shadow-md hover:shadow-lg transition-all duration-300">
       <CardHeader className="flex items-center justify-between">
+        <Checkbox
+          checked={task.isComplete}
+          onCheckedChange={() => dispatch(toggleTaskCompletion(task.id))}
+        />
         <CardTitle className="text-xl font-semibold">{task.title}</CardTitle>
         <Badge
           className={`${getPriorityColor(
